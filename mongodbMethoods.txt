@@ -1,0 +1,31 @@
+/*----post methood----*/
+const data = new model(req.body); // create your instance 
+await data.save(); // save the data into your mongodb cluster
+
+/*----update methood----*/
+await model.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }); 
+// find by id and save the updated data, new: true means it returns new updated data
+
+/*----delete methood----*/
+await model.findByIdAndDelete(req.params.id); // find by id and delete from cluster
+
+/*----get by id methood----*/
+await model.findById(req.params.id); // find by id and return data
+
+/*----get all methood----*/
+await model.find(); // find all data from this model
+
+/*----error handeling middleware----*/
+app.use((err, req, res, next) => {
+    const errStatus = err.status || 500;
+    const errMessage = err.message || "Something went wrong";
+    return res.status(errStatus).json({
+        success: false,
+        status: errStatus,
+        message: errMessage,
+        stack: err.stack
+    });
+});
+
+/*----for generate base64 unique key----*/
+$ openssl rand -base64 32
