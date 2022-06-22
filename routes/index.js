@@ -4,7 +4,8 @@ import {
     hotelController,
     loginController,
     registerController,
-    userController
+    userController,
+    roomController
 } from '../controller';
 import { 
     verifyUser,
@@ -31,5 +32,11 @@ routes.put("/user/:id", verifyUser, userController.updateUserPassword);
 routes.delete("/user/:id", verifyUser, userController.deleteUser);
 routes.get("/user/:id", verifyUser, userController.getUser);
 routes.get("/user", verifyAdmin, userController.getAllUser);
+
+routes.post("/rooms/:hotelid", verifyAdmin, roomController.createRoom);
+routes.put("/rooms/:id", verifyAdmin, roomController.updateRoom);
+routes.delete("/rooms/:id/:hotelid", verifyAdmin, roomController.deleteRoom);
+routes.get("/rooms/:id", roomController.getRoom);
+routes.get("/rooms", roomController.getRooms);
 
 export default routes;
