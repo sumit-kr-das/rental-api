@@ -12,6 +12,16 @@ import {
     verifyAdmin
 } from '../middleware/verifyToken';
 
+routes.get("/", (req, res) => {
+    res.json({
+        title: "Hotel Booking API",
+        msg: "hotel reservationapi, created for educational perpose",
+        lisence: "Sumit Kumar Das",
+        gitHub: "https://github.com/sumit-kr-das/hotel-reservation-api",
+        releases: "v1"
+    });
+});
+
 routes.get("/healthcheck", (req, res) => {
     res.sendStatus(200);
 });

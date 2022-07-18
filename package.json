@@ -2,9 +2,15 @@
   "name": "api",
   "version": "1.0.0",
   "main": "index.js",
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon -r esm index.js"
   },
+  "author": "Sumit Kumar Das",
   "license": "MIT",
   "dependencies": {
     "bcrypt": "^5.0.1",
