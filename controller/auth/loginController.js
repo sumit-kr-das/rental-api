@@ -16,7 +16,7 @@ const loginController = {
             if(!isPassCorrect) {
                 return next(customErrorHandler.wrongCredentials());
             }
-            console.log(isExist);
+            // console.log(isExist);
             const generateToken = jwt.sign({
                 id: isExist._id,
                 isAdmin: isExist.isAdmin

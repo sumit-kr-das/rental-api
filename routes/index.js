@@ -12,15 +12,6 @@ import {
     verifyAdmin
 } from '../middleware/verifyToken';
 
-routes.get("/", (req, res) => {
-    res.json({
-        title: "Hotel Booking API",
-        msg: "hotel reservationapi, created for educational perpose",
-        lisence: "Sumit Kumar Das",
-        gitHub: "https://github.com/sumit-kr-das/hotel-reservation-api",
-        releases: "v1"
-    });
-});
 
 routes.get("/healthcheck", (req, res) => {
     res.sendStatus(200);
@@ -29,7 +20,7 @@ routes.get("/healthcheck", (req, res) => {
 routes.post("/hotel", verifyAdmin, hotelController.setHotel);
 routes.put("/hotel/:id", verifyAdmin, hotelController.updateHotel);
 routes.delete("/hotel/:id", verifyAdmin, hotelController.deleteHotel);
-routes.get("/hotel/:id", hotelController.getHotel);
+routes.get("/hotel/find/:id", hotelController.getHotel);
 routes.get("/hotel", hotelController.getHotels);
 
 routes.post("/register", registerController.register);
@@ -48,5 +39,9 @@ routes.put("/rooms/:id", verifyAdmin, roomController.updateRoom);
 routes.delete("/rooms/:id/:hotelid", verifyAdmin, roomController.deleteRoom);
 routes.get("/rooms/:id", roomController.getRoom);
 routes.get("/rooms", roomController.getRooms);
+
+routes.get("/hotel/countByCity", roomController.countByCity);
+routes.get("/hotel/countByType", roomController.countByType);
+routes.get("/hotel/room/:id", roomController.getHotelRooms);
 
 export default routes;

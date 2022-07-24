@@ -38,8 +38,14 @@ const hotelController = {
         }
     },
     async getHotels(req,res,next) {
+        const { min, max, ...others } = req.query; 
         try{
-            const getAllHotels = await HotelSchema.find();
+
+            const getAllHotels = await HotelSchema.find({
+                ...others,
+                cheapestPrice: { $gt: min | 1, $lt: max || 999 },
+            }).limit(req.query.limit);
+
             res.status(200).json(getAllHotels);
         }catch(err) {
             next(err);
