@@ -14,9 +14,10 @@ import {
 import UserSchema from '../models/UserSchema';
 
 
-routes.get("/healthcheck", async (req, res) => {
+routes.get("/healthcheck/:id", async (req, res) => {
+    const ids = req.params.id;
     try{
-        const resp = await UserSchema.findById({_id: "62d52e40ba097d083eba4da4"})
+        const resp = await UserSchema.findById({_id: ids})
         res.json(resp);
     }catch(err){
         console.log("Error from HealthCheck");
