@@ -1,5 +1,5 @@
-import UserSchema from "../../models/UserSchema";
-import customErrorHandler from "../../services/customErrorHandler";
+import UserSchema from "../../models/UserSchema.js";
+import customErrorHandler from "../../services/customErrorHandler.js";
 import bcrypt from 'bcrypt';
 
 const userController = {

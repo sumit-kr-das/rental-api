@@ -1,4 +1,4 @@
-import HotelSchema from "../../models/HotelSchema";
+import HotelSchema from "../../models/HotelSchema.js";
 
 const hotelController = {
     async setHotel(req,res,next) {

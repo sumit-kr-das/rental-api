@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
-import { JWT_SECRET } from "../config";
-import customErrorHandler from "../services/customErrorHandler";
+import { JWT_SECRET } from "../config/index.js";
+import customErrorHandler from "../services/customErrorHandler.js";
 
 export function verifyToken(req, res, next) {
 	const token = req.cookies.access_token;

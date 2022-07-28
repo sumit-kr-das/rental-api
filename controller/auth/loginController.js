@@ -1,6 +1,6 @@
-import UserSchema from "../../models/UserSchema";
-import customErrorHandler from "../../services/customErrorHandler";
-import { JWT_SECRET } from '../../config';
+import UserSchema from "../../models/UserSchema.js";
+import customErrorHandler from "../../services/customErrorHandler.js";
+import { JWT_SECRET } from '../../config/index.js';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 

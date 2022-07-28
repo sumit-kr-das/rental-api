@@ -1,5 +1,5 @@
-import RoomSchema from "../../models/RoomSchema";
-import HotelSchema from "../../models/HotelSchema";
+import RoomSchema from "../../models/RoomSchema.js";
+import HotelSchema from "../../models/HotelSchema.js";
 
 const roomController = {
 	async createRoom(req, res, next) {

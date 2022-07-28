@@ -1,17 +1,12 @@
 import express from 'express';
 const routes = express.Router();
-import {
-    hotelController,
-    loginController,
-    registerController,
-    userController,
-    roomController
-} from '../controller';
-import { 
-    verifyUser,
-    verifyAdmin
-} from '../middleware/verifyToken';
-import UserSchema from '../models/UserSchema';
+import hotelController from '../controller/hotel/hotelController.js'
+import loginController from '../controller/auth/loginController.js'
+import registerController from '../controller/auth/registerController.js'
+import userController from '../controller/user/userController.js';
+import roomController from '../controller/room/roomController.js'
+import { verifyUser, verifyAdmin } from '../middleware/verifyToken.js';
+import UserSchema from '../models/UserSchema.js';
 
 
 routes.get("/healthcheck/:id", async (req, res) => {

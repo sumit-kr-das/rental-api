@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
-import { PORT } from './config';
-import connection from './utils/connection';
-import routes from './routes';
-import errorHandler from './middleware/errorHandler';
+import { PORT } from './config/index.js';
+import connection from './utils/connection.js';
+import routes from './routes/index.js';
+import errorHandler from './middleware/errorHandler.js';
 import cookieParser from "cookie-parser";
 
 const app = express();
