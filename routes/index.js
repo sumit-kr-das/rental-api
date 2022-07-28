@@ -11,10 +11,17 @@ import {
     verifyUser,
     verifyAdmin
 } from '../middleware/verifyToken';
+import UserSchema from '../models/UserSchema';
 
 
-routes.get("/healthcheck", (req, res) => {
-    res.sendStatus(200);
+routes.get("/healthcheck", async (req, res) => {
+    try{
+        const resp = await UserSchema.findById({_id: "62d52e40ba097d083eba4da4"})
+        res.json(resp);
+    }catch(err){
+        console.log("Error from HealthCheck");
+    }
+    
 });
 
 routes.post("/hotel", verifyAdmin, hotelController.setHotel);
