@@ -1,14 +1,13 @@
 import express from 'express';
 import cors from 'cors';
-import { PORT } from './config/index.js';
 import connection from './utils/connection.js';
 import routes from './routes/index.js';
 import errorHandler from './middleware/errorHandler.js';
 import cookieParser from "cookie-parser";
+import { PORT } from './config/index.js';
+
 
 const app = express();
-
-console.log(process.env.PORT)
 
 app.get("/", (req, res) => {
     res.json({
@@ -26,7 +25,7 @@ app.use(express.json());
 app.use("/api/v1",routes);
 app.use(errorHandler);
 
-app.listen( process.env.PORT , async() => {
-    console.log(`Listening on port no ${process.env.PORT}`);
+app.listen(PORT , async() => {
+    console.log(`Listening on port no ${PORT}`);
     await connection();
 });

@@ -4,6 +4,7 @@ import customErrorHandler from "../services/customErrorHandler.js";
 
 export function verifyToken(req, res, next) {
 	const token = req.cookies.access_token;
+
 	if (!token) {
 		return next(customErrorHandler.unAuthorizedUser());
 	}

@@ -1,5 +1,4 @@
 import UserSchema from '../../models/UserSchema.js';
-// import { SALT_ROUND } from '../../config';
 import bcrypt from 'bcrypt';
 
 const registerController = {

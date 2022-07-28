@@ -1,8 +1,10 @@
 import UserSchema from "../../models/UserSchema.js";
 import customErrorHandler from "../../services/customErrorHandler.js";
-// import { JWT_SECRET } from '../../config/index.js';
+import { JWT_SECRET } from "../../config/index.js";
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+
+
 
 const loginController = {
     async login(req, res, next) {
@@ -20,7 +22,7 @@ const loginController = {
             const generateToken = jwt.sign({
                 id: isExist._id,
                 isAdmin: isExist.isAdmin
-            }, process.env.JWT_SECRET);
+            }, JWT_SECRET);
             const { password, isAdmin, ...otherDetails } = isExist._doc;
 
             res

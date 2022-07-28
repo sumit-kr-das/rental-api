@@ -1,24 +1,17 @@
 import express from 'express';
 const routes = express.Router();
+
+import healthCheckController from '../controller/healthcheck/healthCheckController.js';
 import hotelController from '../controller/hotel/hotelController.js'
 import loginController from '../controller/auth/loginController.js'
 import registerController from '../controller/auth/registerController.js'
 import userController from '../controller/user/userController.js';
 import roomController from '../controller/room/roomController.js'
+
 import { verifyUser, verifyAdmin } from '../middleware/verifyToken.js';
-import UserSchema from '../models/UserSchema.js';
 
 
-routes.get("/healthcheck/:id", async (req, res) => {
-    const ids = req.params.id;
-    try{
-        const resp = await UserSchema.findById({_id: ids})
-        res.json(resp);
-    }catch(err){
-        console.log("Error from HealthCheck");
-    }
-    
-});
+routes.get("/healthcheck", healthCheckController.healthCheck);
 
 routes.post("/hotel", verifyAdmin, hotelController.setHotel);
 routes.put("/hotel/:id", verifyAdmin, hotelController.updateHotel);
@@ -29,9 +22,6 @@ routes.get("/hotel", hotelController.getHotels);
 routes.post("/register", registerController.register);
 routes.post("/login", loginController.login);
 
-// routes.get("/authenticate/:id", verifyAdmin,(req,res,next) => {
-//     res.send("You are authenticate");
-// })
 routes.put("/user/:id", verifyUser, userController.updateUserPassword);
 routes.delete("/user/:id", verifyUser, userController.deleteUser);
 routes.get("/user/:id", verifyUser, userController.getUser);

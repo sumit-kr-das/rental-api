@@ -3,7 +3,6 @@ import HotelSchema from "../../models/HotelSchema.js";
 const hotelController = {
     async setHotel(req,res,next) {
         const newHotel = new HotelSchema(req.body);
-    
         try{
             const savedHotel = await newHotel.save();
             res.status(200).json(savedHotel);
@@ -11,6 +10,7 @@ const hotelController = {
             next(err);
         }
     },
+    
     async updateHotel(req,res,next) {
         try{
             const updatedHotelData = await HotelSchema.findByIdAndUpdate(req.params.id, 
