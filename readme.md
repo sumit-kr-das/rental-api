@@ -1,16 +1,43 @@
-# Setup ENV
-> At first create a .env file into your root directory amd use all the provided variables
-### PORT=8000
-### DB_URI=mongodb+srv://sumit:sumit123@cluster0.ke0cr.mongodb.net/?retryWrites=true&w=majority
-### SALT_ROUND=10
-### JWT_SECRET=jaojd*jso#ksopdk$kd=+dplsce##kdk%
-
-# All Endpoints [you should use your own endpoint here instead of http://localhost:8000/]
-
+### Setup ENV
+At first create a .env file into your root directory amd use all the provided variables. 
+- PORT=8000(user any port no)
+- DB_URI=mongodb+srv://username:password@cluster0.ke0cr.mongodb.net/?retryWrites=true&w=majority
+- SALT_ROUND=10(minimum 10)
+- JWT_SECRET=wXlf2n3VHwAoa5KqpTUUDz9+1GOYp3Zo/iVZND9hXck=(JWT_SECRET will be min 32char long)
+<br/><br/>
+### All Endpoints 
+You should use your own base url here instead of [http://localhost:8000/]
+<br/><br/>
+> base route & healthcheck route
 - http://localhost:8000/  => Base URL
 - http://localhost:8000/api/v1/healthcheck => Check the health of your application
-
+<br/><br/>
+> auth routes
 - http://localhost:8000/api/v1/login => login
 - http://localhost:8000/api/v1/register => register
-
+<br/><br/>
+> hotel routes
 - http://localhost:8000/api/v1/hotel => create a new hotel
+- http://localhost:8000/api/v1/hotel/:id => update hotel
+- http://localhost:8000/api/v1/hotel/:id => delete hotel
+- http://localhost:8000/api/v1/hotel/find/:id => get specific hotel by id
+- http://localhost:8000/api/v1/hotel/ => get all hotels
+<br/><br/>
+- http://localhost:8000/api/v1/hotel/countByCity => count by city
+- http://localhost:8000/api/v1/hotel/countByType => count by type
+- http://localhost:8000/api/v1/hotel/room/:id => get all rooms
+<br/><br/>
+> user routes
+- http://localhost:8000/api/v1/user/:id => update user's password
+- http://localhost:8000/api/v1/user/:id => delete user
+- http://localhost:8000/api/v1/user/:id => find user by id
+- http://localhost:8000/api/v1/user => find all users
+<br/><br/>
+> room routes
+- http://localhost:8000/api/v1/rooms/:hotelid => create a new room & update room number on hotel 
+- http://localhost:8000/api/v1/rooms/:id => update room by id
+- http://localhost:8000/api/v1/rooms/:id/:hotelid => delete room & remove room no from hotel
+- http://localhost:8000/api/v1/rooms/:id => get room by id
+- http://localhost:8000/api/v1/rooms => get all rooms
+
+

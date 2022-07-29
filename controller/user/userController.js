@@ -13,6 +13,7 @@ const userController = {
            next(customErrorHandler.wrongCredentials());
         }
     },
+
     async deleteUser(req,res,next) {
         try{
             await UserSchema.findByIdAndDelete(req.params.id);
@@ -21,6 +22,7 @@ const userController = {
             next(err);
         }
     },
+
     async getUser(req,res,next) {
         try{
             const userData = await UserSchema.findById(req.params.id);
@@ -30,6 +32,7 @@ const userController = {
             next(err);
         }
     },
+
     async getAllUser(req,res,next) {
         try{
             const allUser = await UserSchema.find();

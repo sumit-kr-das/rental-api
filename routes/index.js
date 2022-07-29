@@ -33,8 +33,8 @@ routes.delete("/rooms/:id/:hotelid", verifyAdmin, roomController.deleteRoom);
 routes.get("/rooms/:id", roomController.getRoom);
 routes.get("/rooms", roomController.getRooms);
 
-routes.get("/hotel/countByCity", roomController.countByCity);
-routes.get("/hotel/countByType", roomController.countByType);
-routes.get("/hotel/room/:id", roomController.getHotelRooms);
+routes.get("/hotel/countByCity", hotelController.countByCity);
+routes.get("/hotel/countByType", hotelController.countByType);
+routes.get("/hotel/room/:id", hotelController.getHotelRooms);
 
 export default routes;
