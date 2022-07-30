@@ -1,9 +1,10 @@
 ### Setup ENV
-At first create a .env file into your root directory amd use all the provided variables. 
-- PORT=8000(user any port no)
-- DB_URI=mongodb+srv://username:password@cluster0.ke0cr.mongodb.net/?retryWrites=true&w=majority
-- SALT_ROUND=10(minimum 10)
-- JWT_SECRET=wXlf2n3VHwAoa5KqpTUUDz9+1GOYp3Zo/iVZND9hXck=(JWT_SECRET will be min 32char long)
+At first create a .env file into your root directory and use all the provided variables. 
+- PORT=8000 (use any port no)
+- DB_URI=mongodb+srv://username:password@cluster0.ke0cr.mongodb.net/?retryWrites=true&w=majority 
+(replace username and password with your own username & password)
+- SALT_ROUND=10 (SALT_ROUND should be minimum 10)
+- JWT_SECRET=wXlf2n3VHwAoa5KqpTUUDz9+1GOYp3Zo/iVZND9hXck= (JWT_SECRET should be min 32char long)
 <br/><br/>
 ### All Endpoints 
 You should use your own base url here instead of [http://localhost:8000/]
@@ -25,7 +26,7 @@ You should use your own base url here instead of [http://localhost:8000/]
 <br/><br/>
 - http://localhost:8000/api/v1/hotel/countByCity => count by city
 - http://localhost:8000/api/v1/hotel/countByType => count by type
-- http://localhost:8000/api/v1/hotel/room/:id => get all rooms
+- http://localhost:8000/api/v1/hotel/room/:id => get room by id
 <br/><br/>
 > user routes
 - http://localhost:8000/api/v1/user/:id => update user's password
