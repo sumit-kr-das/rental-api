@@ -35,10 +35,10 @@ const roomController = {
 	},
 
 	async deleteRoom(req, res, next) {
-        const hotelId = req.params.hotelid;
+		const hotelId = req.params.hotelid;
 		try {
 			await RoomSchema.findByIdAndDelete(req.params.id);
-            try {
+			try {
 				await HotelSchema.findByIdAndUpdate(hotelId, {
 					$pull: { rooms: req.params.id },
 				});
@@ -67,7 +67,23 @@ const roomController = {
 		} catch (err) {
 			next(err);
 		}
-	}
+	},
+
+	async updateRoomAvailability(req, res, next) {
+		try {
+			await RoomSchema.updateOne(
+				{ "roomNumbers._id": req.params.id },
+				{
+					$push: {
+						"roomNumbers.$.unAavailableDates": req.body.dates,
+					},
+				}
+			);
+			res.status(200).json("Room has been updated");
+		} catch (err) {
+			next(err);
+		}
+	},
 };
 
 export default roomController;
