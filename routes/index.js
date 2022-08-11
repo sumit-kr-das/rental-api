@@ -7,6 +7,7 @@ import loginController from '../controller/auth/loginController.js'
 import registerController from '../controller/auth/registerController.js'
 import userController from '../controller/user/userController.js';
 import roomController from '../controller/room/roomController.js'
+import newsLetterController from '../controller/newsLetter/newsLetterController.js';
 
 import { verifyUser, verifyAdmin } from '../middleware/verifyToken.js';
 
@@ -37,5 +38,7 @@ routes.put("/rooms/updateAvailability/:id", roomController.updateRoomAvailabilit
 routes.get("/hotel/countByCity", hotelController.countByCity);
 routes.get("/hotel/countByType", hotelController.countByType);
 routes.get("/hotel/room/:id", hotelController.getHotelRooms);
+
+routes.post("/newsLetter", newsLetterController.newsLetter);
 
 export default routes;

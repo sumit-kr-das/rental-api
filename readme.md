@@ -41,5 +41,7 @@ You should use your own base url here instead of [http://localhost:8000/]
 - http://localhost:8000/api/v1/rooms/:id => get room by id
 - http://localhost:8000/api/v1/rooms => get all rooms
 - http://localhost:8000/api/v1/rooms/updateAvailability/:id => update unavailable or booked hotel
-
+<br/><br/>
+> newsletter route
+- http://localhost:8000/api/v1/newsLetter => post user's email id
 
