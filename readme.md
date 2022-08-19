@@ -1,4 +1,34 @@
-### Setup ENV
+## Getting Started
+
+To get a local copy up and running follow these simple steps.
+<br/>
+For using the frontend part [click here](https://github.com/sumit-kr-das/rental)
+
+### Prerequisites
+
+NodeJS, MongoDB is installed on your machine and the credentials matches ```config>index.js``` available in the root directory
+
+### Installation
+
+1. Clone the Rental API
+
+```sh
+$ git clone https://github.com/sumit-kr-das/rental-api
+```
+
+2. Install NPM packages
+
+```sh
+$ yarn install or $ npm install
+```
+
+3. Start the API
+
+```sh
+$ yarn dev or $ npm run dev
+```
+
+## Setup ENV
 At first create a .env file into your root directory and use all the provided variables. 
 - PORT=8000 (use any port no)
 - DB_URI=mongodb+srv://username:password@cluster0.ke0cr.mongodb.net/?retryWrites=true&w=majority 
@@ -6,7 +36,7 @@ At first create a .env file into your root directory and use all the provided va
 - SALT_ROUND=10 (SALT_ROUND should be minimum 10)
 - JWT_SECRET=wXlf2n3VHwAoa5KqpTUUDz9+1GOYp3Zo/iVZND9hXck= (JWT_SECRET should be min 32char long)
 <br/><br/>
-### All Endpoints 
+## All Endpoints 
 You should use your own base url here instead of [http://localhost:8000/]
 <br/><br/>
 > base route & healthcheck route
@@ -25,6 +55,7 @@ You should use your own base url here instead of [http://localhost:8000/]
 - http://localhost:8000/api/v1/hotel/ => get all hotels
 <br/><br/>
 - http://localhost:8000/api/v1/hotel/countByCity => count by city
+    - http://localhost:8000/api/v1/hotel/countByCity?cities=virginia,losangeles,newjersy,newyork,sanfrancisco,wilmington
 - http://localhost:8000/api/v1/hotel/countByType => count by type
 - http://localhost:8000/api/v1/hotel/room/:id => get room by id
 <br/><br/>
