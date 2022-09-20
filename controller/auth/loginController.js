@@ -22,13 +22,12 @@ const loginController = {
             const generateToken = jwt.sign({
                 id: isExist._id,
                 isAdmin: isExist.isAdmin
-            }, JWT_SECRET);
+            }, JWT_SECRET, { expiresIn: "3d" });
 
-            const { password, isAdmin, ...otherDetails } = isExist._doc;
+            // const { password, isAdmin, ...otherDetails } = isExist._doc;
 
-            res.cookie("access_token", generateToken, {
-                httpOnly: true
-            }).status(200).json(otherDetails);
+            res.status(200).json({ access_token: generateToken });
+            
         }catch(err){
             next(err);
         }

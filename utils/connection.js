@@ -6,7 +6,7 @@ mongoose.connection.on("connected", () => {
 })
 
 mongoose.connection.on("disconnected", () => {
-    console.log("DB Disonnected ..x..x..x..");
+    console.log("DB Disconnected ..x..x..x..");
 })
 
 export default async function connection() {

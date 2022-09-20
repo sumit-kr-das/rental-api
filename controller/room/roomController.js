@@ -1,5 +1,6 @@
 import RoomSchema from "../../models/RoomSchema.js";
 import HotelSchema from "../../models/HotelSchema.js";
+import BookingsSchema from "../../models/BookingsSchema.js";
 
 const roomController = {
 	async createRoom(req, res, next) {
@@ -70,16 +71,30 @@ const roomController = {
 	},
 
 	async updateRoomAvailability(req, res, next) {
+		const userID = req.user.id;
+		const roomID = req.params.id;
+
 		try {
 			await RoomSchema.updateOne(
-				{ "roomNumbers._id": req.params.id },
+				{ "roomNumbers._id": roomID },
 				{
 					$push: {
 						"roomNumbers.$.unAavailableDates": req.body.dates,
 					},
 				}
 			);
-			res.status(200).json("Room has been updated");
+			try{
+ 				const newBooking = new BookingsSchema({ 
+					userId: userID, 
+					roomId: roomID, 
+					reserveDates: req.body.dates  
+				})
+				const bookedRoom = await newBooking.save();
+				res.status(200).json(bookedRoom);
+			}catch(err){
+				next(err);
+			}
+			// res.status(200).json("Room has been updated");
 		} catch (err) {
 			next(err);
 		}

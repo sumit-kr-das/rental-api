@@ -20,8 +20,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(cors());
-app.use(cookieParser());
 app.use(express.json());
+app.use(cookieParser());
 app.use("/api/v1",routes);
 app.use(errorHandler);
 

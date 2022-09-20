@@ -97,6 +97,16 @@ const hotelController = {
 		}catch(err){
 			next(err);
 		}
+	},
+
+    async searchHotel(req,res,next){
+        const regex = new RegExp(req.params.place, 'i')
+		try{
+			const result = await HotelSchema.find({ city: regex }).select({ city: 1 }).limit(5);
+			res.status(200).json(result);
+		}catch(err){
+			next(err);
+		}
 	}
 }
 
