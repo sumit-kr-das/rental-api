@@ -34,7 +34,7 @@ routes.put("/rooms/:id", verifyAdmin, roomController.updateRoom);
 routes.delete("/rooms/:id/:hotelid", verifyAdmin, roomController.deleteRoom);
 routes.get("/rooms/:id", roomController.getRoom);
 routes.get("/rooms", roomController.getRooms);
-routes.put("/rooms/updateAvailability/:id", verifyUser, roomController.updateRoomAvailability);
+routes.put("/rooms/updateAvailability/:roomId", verifyUser, roomController.updateRoomAvailability);
 
 routes.get("/hotel/countByCity", hotelController.countByCity);
 routes.get("/hotel/countByType", hotelController.countByType);

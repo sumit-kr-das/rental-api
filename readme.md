@@ -71,7 +71,11 @@ You should use your own base url here instead of [http://localhost:8000/]
 - http://localhost:8000/api/v1/rooms/:id/:hotelid => delete room & remove room no from hotel
 - http://localhost:8000/api/v1/rooms/:id => get room by id
 - http://localhost:8000/api/v1/rooms => get all rooms
-- http://localhost:8000/api/v1/rooms/updateAvailability/:id => update unavailable or booked hotel
+- http://localhost:8000/api/v1/rooms/updateAvailability/:id => update unavailable dates and book hotel
+<br/><br/>
+> booking route
+- http://localhost:8000/api/v1/bookings => get all booking details
+- http://localhost:8000/api/v1/bookings/:id => cancel booked hotel
 <br/><br/>
 > newsletter route
 - http://localhost:8000/api/v1/newsLetter => post user's email id

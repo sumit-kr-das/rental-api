@@ -72,7 +72,7 @@ const roomController = {
 
 	async updateRoomAvailability(req, res, next) {
 		const userID = req.user.id;
-		const roomID = req.params.id;
+		const roomID = req.params.roomId;
 
 		try {
 			await RoomSchema.updateOne(
@@ -86,7 +86,10 @@ const roomController = {
 			try{
  				const newBooking = new BookingsSchema({ 
 					userId: userID, 
-					roomId: roomID, 
+					roomId: roomID,
+					hotelId: req.body.hotelId,
+					title: req.body.title,
+					address: req.body.address,
 					reserveDates: req.body.dates  
 				})
 				const bookedRoom = await newBooking.save();
