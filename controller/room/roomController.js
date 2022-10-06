@@ -90,7 +90,9 @@ const roomController = {
 					hotelId: req.body.hotelId,
 					title: req.body.title,
 					address: req.body.address,
-					reserveDates: req.body.dates  
+					reserveDates: req.body.dates,
+					options: req.body.options,
+					price: req.body.totalPrice
 				})
 				const bookedRoom = await newBooking.save();
 				res.status(200).json(bookedRoom);
