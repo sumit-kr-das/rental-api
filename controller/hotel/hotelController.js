@@ -3,9 +3,25 @@ import RoomSchema from "../../models/RoomSchema.js";
 
 const hotelController = {
     async setHotel(req,res,next) {
-        const newHotel = new HotelSchema(req.body);
+        const { title, type, city, address, distance, description, rating, cheapestPrice, featured, freeTaxi, freeCancel } = req.body;
+        const filePaths = req.files.map(file=>file.path);
+
         try{
-            const savedHotel = await newHotel.save();
+            const createHotel = new HotelSchema({ 
+                    title, 
+                    type, 
+                    city, 
+                    address, 
+                    distance, 
+                    description, 
+                    rating, 
+                    cheapestPrice, 
+                    featured, 
+                    freeTaxi, 
+                    freeCancel,
+                    photos: filePaths
+                });
+            const savedHotel = await createHotel.save();
             res.status(200).json(savedHotel);
         }catch(err) {
             next(err);
@@ -46,8 +62,10 @@ const hotelController = {
         try{
             const getAllHotels = await HotelSchema.find({
                 ...others,
-                cheapestPrice: { $gt: min | 1, $lt: max || 999 },
+                cheapestPrice: { $gt: min | 1, $lt: max || 9999 },
             }).limit(req.query.limit);
+
+            // const getAllHotels = await HotelSchema.find()
 
             res.status(200).json(getAllHotels);
         }catch(err) {
@@ -69,11 +87,11 @@ const hotelController = {
 
 	async countByType(req, res, next) {
 		try {
-			const hotelCount = await HotelSchema.countDocuments({ type: "hotel" });
-			const apartmentCount = await HotelSchema.countDocuments({ type: "apartment" });
-			const resortCount = await HotelSchema.countDocuments({ type: "resort" });
-			const villaCount = await HotelSchema.countDocuments({ type: "villa" });
-			const cabinCount = await HotelSchema.countDocuments({ type: "cabin" });
+			const hotelCount = await HotelSchema.countDocuments({ type: "hotels" });
+			const apartmentCount = await HotelSchema.countDocuments({ type: "apartments" });
+			const resortCount = await HotelSchema.countDocuments({ type: "resorts" });
+			const villaCount = await HotelSchema.countDocuments({ type: "villas" });
+			const cabinCount = await HotelSchema.countDocuments({ type: "cabins" });
 			
 			res.status(200).json([
 				{ type: "hotels", count: hotelCount },

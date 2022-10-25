@@ -10,12 +10,14 @@ import roomController from '../controller/room/roomController.js'
 import newsLetterController from '../controller/newsLetter/newsLetterController.js';
 import bookingsController from '../controller/bookings/bookingsController.js';
 
+import fileUpload from '../services/multerService.js';
+
 import { verifyUser, verifyAdmin } from '../middleware/verifyToken.js';
 
 
 routes.get("/healthcheck", healthCheckController.healthCheck);
 
-routes.post("/hotel", verifyAdmin, hotelController.setHotel);
+routes.post("/hotel", [verifyAdmin, fileUpload.any("images")], hotelController.setHotel);
 routes.put("/hotel/:id", verifyAdmin, hotelController.updateHotel);
 routes.delete("/hotel/:id", verifyAdmin, hotelController.deleteHotel);
 routes.get("/hotel/find/:id", hotelController.getHotel);
