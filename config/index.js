@@ -5,7 +5,5 @@ export const {
     PORT,
     DB_URI,
     SALT_ROUND,
-    JWT_SECRET,
-    RAZORPAY_API_KEY,
-    RAZORPAY_SECRET
+    JWT_SECRET
 } = process.env;
