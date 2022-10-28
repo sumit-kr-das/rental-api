@@ -5,6 +5,7 @@ import routes from './routes/index.js';
 import errorHandler from './middleware/errorHandler.js';
 import cookieParser from "cookie-parser";
 import { PORT } from './config/index.js';
+import path from 'path';
 
 
 const app = express();
@@ -18,6 +19,8 @@ app.get("/", (req, res) => {
         releases: "v1"
     });
 });
+
+// global.appRoot = path.resolve(__dirname);
 
 app.use(cors());
 app.use(express.json());
