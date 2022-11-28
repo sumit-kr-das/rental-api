@@ -7,6 +7,9 @@ import cookieParser from "cookie-parser";
 import { PORT } from './config/index.js';
 import path from 'path';
 
+import userRoutes from './routes/user.js';
+import authRoutes from './routes/auth.js';
+
 
 const app = express();
 
@@ -22,11 +25,19 @@ app.get("/", (req, res) => {
 
 // global.appRoot = path.resolve(__dirname);
 
+/* MIDDLEWARES */
 app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/v1",routes);
 app.use('/uploads', express.static('uploads'));
+
+/* ROUTES */
+//app.use("/api/v1",routes);
+
+app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/auth", authRoutes);
+
+
 app.use(errorHandler);
 
 app.listen(PORT , async() => {

@@ -1,4 +1,4 @@
-import UserSchema from '../../models/UserSchema.js';
+import User from '../../models/User.js';
 import { SALT_ROUND } from '../../config/index.js';
 import bcrypt from 'bcrypt';
 
@@ -11,7 +11,7 @@ const registerController = {
             const salt = bcrypt.genSaltSync(saltRound);
             const hash = bcrypt.hashSync(password, salt);
 
-            const newUser = new UserSchema({ name, email, password: hash });
+            const newUser = new User({ name, email, password: hash });
             await newUser.save();
 
             res.status(200).json({ msg: "User registered seccessfully" });

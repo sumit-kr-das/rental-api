@@ -2,16 +2,17 @@ import jwt from "jsonwebtoken";
 import { JWT_SECRET } from "../config/index.js";
 import customErrorHandler from "../services/customErrorHandler.js";
 
-export async function verifyToken(req, res, next) {
-	const authHeader = req.headers.authorization;
-	if (!authHeader) {
+export function verifyToken(req, res, next) {
+	const authHeader = req?.headers?.authorization;
+
+	if (!req.headers || !authHeader|| !authHeader.startsWith("Bearer ")) {
 		return next(customErrorHandler.unAuthorizedUser());
 	}
 
 	const token = authHeader.split(" ")[1];
-
+	
 	try{
-		await jwt.verify(token, JWT_SECRET, (err, user) => {
+		jwt.verify(token, JWT_SECRET, (err, user) => {
 			if (err) {
 				return next(customErrorHandler.unAuthorizedUser());
 			}
@@ -35,7 +36,7 @@ export function verifyUser(req, res, next) {
 
 export function verifyAdmin(req, res, next) {
 	verifyToken(req, res, () => {
-		if (req.user && req.user.isAdmin) {
+		if (req.user.isAdmin) {
 			next();
 		} else {
 			next(customErrorHandler.unAuthorizedUser());

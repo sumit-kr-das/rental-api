@@ -1,4 +1,4 @@
-import UserSchema from "../../models/UserSchema.js";
+import User from "../../models/User.js";
 import customErrorHandler from "../../services/customErrorHandler.js";
 import { JWT_SECRET } from "../../config/index.js";
 import jwt from 'jsonwebtoken';
@@ -9,7 +9,7 @@ const loginController = {
     async login(req, res, next) {
         const { email } = req.body;
         try{
-            const isExist = await UserSchema.findOne({ email });
+            const isExist = await User.findOne({ email });
             if(!isExist) {
                 return next(customErrorHandler.wrongCredentials());
             }

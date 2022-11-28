@@ -1,5 +1,5 @@
-import UserSchema from "../../models/UserSchema.js";
-import customErrorHandler from "../../services/customErrorHandler.js";
+import User from "../models/User.js";
+import customErrorHandler from "../services/customErrorHandler.js";
 import bcrypt from 'bcrypt';
 
 const userController = {
@@ -7,7 +7,7 @@ const userController = {
         try{
             const salt = bcrypt.genSaltSync(10);
             const hash = bcrypt.hashSync(req.body.password, salt);
-            await UserSchema.findByIdAndUpdate(req.params.id, { password: hash}, { new: true });
+            await User.findByIdAndUpdate(req.params.id, { password: hash}, { new: true });
             res.status(200).json({ msg: "Password has been chenged"});
         }catch(err) {
            next(customErrorHandler.wrongCredentials());
@@ -16,7 +16,7 @@ const userController = {
 
     async deleteUser(req,res,next) {
         try{
-            await UserSchema.findByIdAndDelete(req.params.id);
+            await User.findByIdAndDelete(req.params.id);
             res.status(200).json({ msg: "Your account has been deleted"});
         }catch(err) {
             next(err);
@@ -25,7 +25,7 @@ const userController = {
 
     async getUser(req,res,next) {
         try{
-            const userData = await UserSchema.findById(req.params.id);
+            const userData = await User.findById(req.params.id);
             const { password, __v, ...other} = userData._doc; 
             res.status(200).json(other);
         }catch(err) {
@@ -35,7 +35,7 @@ const userController = {
 
     async getAllUser(req,res,next) {
         try{
-            const allUser = await UserSchema.find();
+            const allUser = await User.find();
             res.status(200).json(allUser);
         }catch(err){
             next(err);
