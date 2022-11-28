@@ -1,10 +1,10 @@
-import BookingsSchema from "../../models/BookingsSchema.js";
-import RoomSchema from "../../models/RoomSchema.js";
+import Booking from "../models/Booking.js";
+import Room from "../models/Room.js";
 
 const bookingsController = {
 	async getBookings(req, res, next) {
 		try {
-			const bookings = await BookingsSchema.find({ userID: req.user.id });
+			const bookings = await Booking.find({ userID: req.user.id });
 			res.status(200).json(bookings);
 		} catch (err) {
 			next(err);
@@ -13,9 +13,9 @@ const bookingsController = {
 	async removeBookings(req, res, next) {
 		const bookingId = req.params.id;
 		try {
-			const findBooking = await BookingsSchema.findById(bookingId);
+			const findBooking = await Booking.findById(bookingId);
 			try {
-				await RoomSchema.updateOne(
+				await Room.updateOne(
 					{ "roomNumbers._id": findBooking.roomId },
 					{
 						$pullAll: {
@@ -24,7 +24,7 @@ const bookingsController = {
 					}
 				);
 				try {
-					await BookingsSchema.findByIdAndDelete(bookingId);
+					await Booking.findByIdAndDelete(bookingId);
                     res.status(200).json("Hotel remove siccessfully");
 				} catch (err) {
 					next(err);

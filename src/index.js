@@ -1,29 +1,21 @@
 import express from 'express';
 import cors from 'cors';
 import connection from './utils/connection.js';
-import routes from './routes/index.js';
 import errorHandler from './middleware/errorHandler.js';
 import cookieParser from "cookie-parser";
 import { PORT } from './config/index.js';
-import path from 'path';
 
+import testRoutes from './routes/test.js'
 import userRoutes from './routes/user.js';
 import authRoutes from './routes/auth.js';
+import hotelRoutes from './routes/hotel.js';
+import roomRoutes from './routes/rooms.js';
+import newsRoutes from './routes/newsletter.js';
+import bookingRoutes from './routes/bookings.js';
 
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.json({
-        title: "Hotel Booking API",
-        msg: "hotel reservation api, created for educational perpose",
-        lisence: "Sumit Kumar Das",
-        gitHub: "https://github.com/sumit-kr-das/hotel-reservation-api",
-        releases: "v1"
-    });
-});
-
-// global.appRoot = path.resolve(__dirname);
 
 /* MIDDLEWARES */
 app.use(cors());
@@ -32,12 +24,15 @@ app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
 
 /* ROUTES */
-//app.use("/api/v1",routes);
-
+app.use("/api/v1",testRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/hotel", hotelRoutes);
+app.use("/api/v1/room", roomRoutes);
+app.use("/api/v1/bookings", bookingRoutes);
+app.use("/api/v1/newsLetter", newsRoutes);
 
-
+/* ERROR HANDLER */
 app.use(errorHandler);
 
 app.listen(PORT , async() => {

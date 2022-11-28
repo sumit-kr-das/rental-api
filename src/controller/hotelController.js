@@ -1,5 +1,5 @@
-import HotelSchema from "../../models/HotelSchema.js";
-import RoomSchema from "../../models/RoomSchema.js";
+import Hotel from "../models/Hotel.js";
+import Room from "../models/Room.js";
 
 const hotelController = {
 	async setHotel(req, res, next) {
@@ -16,10 +16,11 @@ const hotelController = {
 			freeTaxi,
 			freeCancel,
 		} = req.body;
+		
 		const filePaths = req.files.map((file) => file.path);
-        console.log(filePaths);
+
 		try {
-			const createHotel = new HotelSchema({
+			const createHotel = new Hotel({
 				title,
 				type,
 				city,
@@ -42,7 +43,7 @@ const hotelController = {
 
 	async updateHotel(req, res, next) {
 		try {
-			const updatedHotelData = await HotelSchema.findByIdAndUpdate(
+			const updatedHotelData = await Hotel.findByIdAndUpdate(
 				req.params.id,
 				{ $set: req.body },
 				{ new: true }
@@ -55,7 +56,7 @@ const hotelController = {
 
 	async deleteHotel(req, res, next) {
 		try {
-			await HotelSchema.findByIdAndDelete(req.params.id);
+			await Hotel.findByIdAndDelete(req.params.id);
 			res.status(200).json({ msg: "Hotel has been deleted" });
 		} catch (err) {
 			next(err);
@@ -64,7 +65,7 @@ const hotelController = {
 
 	async getHotel(req, res, next) {
 		try {
-			const getSingleHotel = await HotelSchema.findById(req.params.id);
+			const getSingleHotel = await Hotel.findById(req.params.id);
 			res.status(200).json(getSingleHotel);
 		} catch (err) {
 			next(err);
@@ -74,12 +75,12 @@ const hotelController = {
 	async getHotels(req, res, next) {
 		const { min, max, ...others } = req.query;
 		try {
-			const getAllHotels = await HotelSchema.find({
+			const getAllHotels = await Hotel.find({
 				...others,
 				cheapestPrice: { $gt: min | 1, $lt: max || 9999 },
 			}).limit(req.query.limit);
 
-			// const getAllHotels = await HotelSchema.find()
+			// const getAllHotels = await Hotel.find()
 
 			res.status(200).json(getAllHotels);
 		} catch (err) {
@@ -92,7 +93,7 @@ const hotelController = {
 		try {
 			const list = await Promise.all(
 				cities.map((city) => {
-					return HotelSchema.countDocuments({ city: city });
+					return Hotel.countDocuments({ city: city });
 				})
 			);
 			res.status(200).json(list);
@@ -103,13 +104,13 @@ const hotelController = {
 
 	async countByType(req, res, next) {
 		try {
-			const hotelCount = await HotelSchema.countDocuments({ type: "hotels" });
-			const apartmentCount = await HotelSchema.countDocuments({
+			const hotelCount = await Hotel.countDocuments({ type: "hotels" });
+			const apartmentCount = await Hotel.countDocuments({
 				type: "apartments",
 			});
-			const resortCount = await HotelSchema.countDocuments({ type: "resorts" });
-			const villaCount = await HotelSchema.countDocuments({ type: "villas" });
-			const cabinCount = await HotelSchema.countDocuments({ type: "cabins" });
+			const resortCount = await Hotel.countDocuments({ type: "resorts" });
+			const villaCount = await Hotel.countDocuments({ type: "villas" });
+			const cabinCount = await Hotel.countDocuments({ type: "cabins" });
 
 			res.status(200).json([
 				{ type: "hotels", count: hotelCount },
@@ -125,10 +126,10 @@ const hotelController = {
 
 	async getHotelRooms(req, res, next) {
 		try {
-			const hotel = await HotelSchema.findById(req.params.id);
+			const hotel = await Hotel.findById(req.params.id);
 			const list = await Promise.all(
 				hotel.rooms.map((room) => {
-					return RoomSchema.findById(room);
+					return Room.findById(room);
 				})
 			);
 			res.status(200).json(list);
@@ -140,7 +141,7 @@ const hotelController = {
 	async searchHotel(req, res, next) {
 		const regex = new RegExp(req.params.place, "i");
 		try {
-			const result = await HotelSchema.find({ city: regex })
+			const result = await Hotel.find({ city: regex })
 				.select({ city: 1 })
 				.limit(5);
 			res.status(200).json(result);

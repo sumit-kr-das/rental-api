@@ -1,16 +1,16 @@
-import RoomSchema from "../../models/RoomSchema.js";
-import HotelSchema from "../../models/HotelSchema.js";
-import BookingsSchema from "../../models/BookingsSchema.js";
+import Room from "../models/Room.js";
+import Hotel from "../models/Hotel.js";
+import Booking from "../models/Booking.js";
 
 const roomController = {
 	async createRoom(req, res, next) {
 		const hotelId = req.params.hotelid;
-		const newRoom = new RoomSchema(req.body);
+		const newRoom = new Room(req.body);
 
 		try {
 			const savedRoom = await newRoom.save();
 			try {
-				await HotelSchema.findByIdAndUpdate(hotelId, {
+				await Hotel.findByIdAndUpdate(hotelId, {
 					$push: { rooms: savedRoom._id },
 				});
 			} catch (err) {
@@ -24,7 +24,7 @@ const roomController = {
 
 	async updateRoom(req, res, next) {
 		try {
-			const updatedRoomData = await RoomSchema.findByIdAndUpdate(
+			const updatedRoomData = await Room.findByIdAndUpdate(
 				req.params.id,
 				{ $set: req.body },
 				{ new: true }
@@ -38,9 +38,9 @@ const roomController = {
 	async deleteRoom(req, res, next) {
 		const hotelId = req.params.hotelid;
 		try {
-			await RoomSchema.findByIdAndDelete(req.params.id);
+			await Room.findByIdAndDelete(req.params.id);
 			try {
-				await HotelSchema.findByIdAndUpdate(hotelId, {
+				await Hotel.findByIdAndUpdate(hotelId, {
 					$pull: { rooms: req.params.id },
 				});
 			} catch (err) {
@@ -54,7 +54,7 @@ const roomController = {
 
 	async getRoom(req, res, next) {
 		try {
-			const getSingleRoom = await RoomSchema.findById(req.params.id);
+			const getSingleRoom = await Room.findById(req.params.id);
 			res.status(200).json(getSingleRoom);
 		} catch (err) {
 			next(err);
@@ -63,7 +63,7 @@ const roomController = {
 
 	async getRooms(req, res, next) {
 		try {
-			const getAllRooms = await RoomSchema.find();
+			const getAllRooms = await Room.find();
 			res.status(200).json(getAllRooms);
 		} catch (err) {
 			next(err);
@@ -75,7 +75,7 @@ const roomController = {
 		const roomID = req.params.roomId;
 
 		try {
-			await RoomSchema.updateOne(
+			await Room.updateOne(
 				{ "roomNumbers._id": roomID },
 				{
 					$push: {
@@ -84,7 +84,7 @@ const roomController = {
 				}
 			);
 			try{
- 				const newBooking = new BookingsSchema({ 
+ 				const newBooking = new Booking({ 
 					userId: userID, 
 					roomId: roomID,
 					hotelId: req.body.hotelId,

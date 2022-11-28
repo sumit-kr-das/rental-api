@@ -4,4 +4,5 @@ const NewsLetterSchema = new mongoose.Schema({
     email: { type: String, required:true}
 }, { timestamps: true });
 
-export default mongoose.model("Newsletter", NewsLetterSchema);
+const Newsletter = mongoose.model("Newsletter", NewsLetterSchema);
+export default Newsletter;

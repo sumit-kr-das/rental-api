@@ -1,12 +1,15 @@
 import mongoose from 'mongoose';
 
+const reqString = { type: String, required: true };
+const reqNumber = { type: Number, required: true };
+
 const RoomSchema = new mongoose.Schema({
-    title: { type: String, required: true },
-    price: { type: Number, required: true },
-    beds: { type: Number, required: true },
-    maxPeople: { type: Number, required: true },
+    title: reqString,
+    price: reqNumber,
+    beds: reqNumber,
+    maxPeople: reqNumber,
     area: { type: Number },
-    desc: { type: String, required: true },
+    desc: reqString,
     roomNumbers: [{ number: Number, unAavailableDates: { type: [ Date ]} }],
 }, { timestamps: true });
 
@@ -18,4 +21,5 @@ const RoomSchema = new mongoose.Schema({
     ]
 */
 
-export default mongoose.model("Room", RoomSchema, "rooms");
+const Room = mongoose.model("Rooms", RoomSchema, "rooms");
+export default Room;
