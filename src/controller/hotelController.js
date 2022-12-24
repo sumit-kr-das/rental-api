@@ -18,7 +18,7 @@ const hotelController = {
 		} = req.body;
 		
 		const filePaths = req.files.map((file) => file.path);
-
+		
 		try {
 			const createHotel = new Hotel({
 				title,
