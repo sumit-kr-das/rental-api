@@ -10,11 +10,12 @@ const registerController = {
         try{
             const salt = bcrypt.genSaltSync(saltRound);
             const hash = bcrypt.hashSync(password, salt);
-
             const newUser = new User({ name, email, password: hash });
             await newUser.save();
-
-            res.status(200).json({ msg: "User registered seccessfully" });
+            res.status(200).json({
+                success: true,
+                message: "User registered seccessfully" 
+            });
         }catch(err){
             next(err);
         }

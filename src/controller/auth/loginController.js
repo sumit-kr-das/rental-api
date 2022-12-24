@@ -13,12 +13,10 @@ const loginController = {
             if(!isExist) {
                 return next(customErrorHandler.wrongCredentials());
             }
-
             const isPassCorrect = await bcrypt.compareSync(req.body.password, isExist.password);
             if(!isPassCorrect) {
                 return next(customErrorHandler.wrongCredentials());
             }
-
             const generateToken = jwt.sign({
                 id: isExist._id,
                 isAdmin: isExist.isAdmin
@@ -26,7 +24,11 @@ const loginController = {
 
             // const { password, isAdmin, ...otherDetails } = isExist._doc;
 
-            res.status(200).json({ access_token: generateToken });
+            res.status(200).json({
+                success: true,
+                message: "Login Successfull",
+                access_token: generateToken 
+            });
             
         }catch(err){
             next(err);
