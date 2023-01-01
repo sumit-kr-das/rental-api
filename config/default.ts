@@ -1,5 +1,6 @@
 export default {
     port: 8000,
     dbUri: "mongodb://127.0.0.1:27017/rental",
-    host: "http://localhost:"
+    host: "http://localhost:",
+    salt: 10
 }
