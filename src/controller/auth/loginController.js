@@ -22,7 +22,7 @@ const loginController = {
       const generateToken = jwt.sign(
         {
           id: isExist._id,
-          isAdmin: isExist.isAdmin,
+          role: isExist.role,
         },
         JWT_SECRET,
         { expiresIn: "3d" }
@@ -33,9 +33,9 @@ const loginController = {
       res.status(200).json({
         success: true,
         message: "Login Successfull",
-        data: {
+        user: {
           name: isExist.name,
-          role: isExist.isAdmin === true ? "admin" : "user",
+          role: isExist.role,
           access_token: generateToken,
         },
       });
