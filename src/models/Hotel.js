@@ -6,6 +6,7 @@ const reqArray = { type: [String] };
 const reqBool = { type: Boolean, default: false };
 
 const HotelSchema = new mongoose.Schema({
+  userId: { type: String, required: true, unique: true },
   title: reqString,
   description: reqString,
   address: reqString,

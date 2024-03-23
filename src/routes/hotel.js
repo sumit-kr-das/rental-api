@@ -8,12 +8,13 @@ const router = express.Router();
 /* CREATE */
 router.post(
   "/",
-  [verifyHotel, fileUpload.any("images")],
+  [verifyHotel, fileUpload.array("images")],
   hotelController.setHotel
 );
 
 /* READ */
 router.get("/", hotelController.getHotels);
+router.get("/getUsersHotel", verifyHotel, hotelController.getUsersHotel);
 router.get("/find/:id", hotelController.getHotel);
 router.get("/countByCity", hotelController.countByCity);
 router.get("/countByType", hotelController.countByType);

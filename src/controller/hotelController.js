@@ -1,8 +1,14 @@
 import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
+import fs from "fs";
+import plimit from "p-limit";
+import { uploadOnCloudnary } from "../utils/cloudnary.js";
+
+const limit = plimit(5);
 
 const hotelController = {
   async setHotel(req, res, next) {
+    const uderId = req.user.id;
     const {
       title,
       type,
@@ -19,11 +25,23 @@ const hotelController = {
 
     let filePaths;
     if (req.files) {
-      filePaths = req.files.map((file) => file.path);
+      const cloudnaryUploadedImages = req.files.map((image) => {
+        return limit(async () => {
+          const cloudnaryResult = await uploadOnCloudnary(image.path);
+          return cloudnaryResult;
+        });
+      });
+      const cloudnaryUploads = await Promise.all(cloudnaryUploadedImages);
+      filePaths = cloudnaryUploads.map((item) => item.url);
+
+      req.files?.map((image) => {
+        fs.unlinkSync(image.path);
+      });
     }
 
     try {
       const createHotel = new Hotel({
+        userId: uderId,
         title,
         type,
         city,
@@ -40,6 +58,9 @@ const hotelController = {
       const savedHotel = await createHotel.save();
       res.status(200).json(savedHotel);
     } catch (err) {
+      req.files?.map((image) => {
+        fs.unlinkSync(image.path);
+      });
       next(err);
     }
   },
@@ -69,6 +90,15 @@ const hotelController = {
   async getHotel(req, res, next) {
     try {
       const getSingleHotel = await Hotel.findById(req.params.id);
+      res.status(200).json(getSingleHotel);
+    } catch (err) {
+      next(err);
+    }
+  },
+
+  async getUsersHotel(req, res, next) {
+    try {
+      const getSingleHotel = await Hotel.find({ userId: req.user.id });
       res.status(200).json(getSingleHotel);
     } catch (err) {
       next(err);
