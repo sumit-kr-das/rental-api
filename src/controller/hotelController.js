@@ -2,13 +2,12 @@ import Hotel from "../models/Hotel.js";
 import Room from "../models/Room.js";
 import fs from "fs";
 import plimit from "p-limit";
-import { uploadOnCloudnary } from "../utils/cloudnary.js";
+import { destroyOnCloudnary, uploadOnCloudnary } from "../utils/cloudnary.js";
 
 const limit = plimit(5);
 
 const hotelController = {
   async setHotel(req, res, next) {
-    const uderId = req.user.id;
     const {
       title,
       type,
@@ -41,7 +40,7 @@ const hotelController = {
 
     try {
       const createHotel = new Hotel({
-        userId: uderId,
+        userId: req.user.id,
         title,
         type,
         city,
@@ -67,9 +66,84 @@ const hotelController = {
 
   async updateHotel(req, res, next) {
     try {
-      const updatedHotelData = await Hotel.findByIdAndUpdate(
-        req.params.id,
-        { $set: req.body },
+      const user = await Hotel.findOne({ userId: req.user.id });
+      if (!user) {
+        return res.status(401).json({
+          msg: "Hotel not found!",
+        });
+      }
+      const {
+        userId,
+        title,
+        type,
+        city,
+        address,
+        distance,
+        description,
+        rating,
+        cheapestPrice,
+        featured,
+        freeTaxi,
+        freeCancel,
+      } = req.body;
+
+      let filePaths;
+      if (req.files.length > 0) {
+        /* if image is already available the delete the images */
+        if (user.photos.length > 0) {
+          const removeUploadedImages = user.photos.map((url) => {
+            return limit(async () => {
+              const urlArray = url.split("/");
+              const uurl = urlArray[urlArray.length - 1];
+              const imgName = uurl.split(".")[0];
+              const resultUploadedImages = await destroyOnCloudnary(imgName);
+              return resultUploadedImages;
+            });
+          });
+          // if (!removeUploadedImages) {
+          //   return res.status(404).json({
+          //     message: "User image is not found in cloudnary",
+          //   });
+          // }
+          const newUploadedImages = await Promise.all(removeUploadedImages);
+          console.log("from update", newUploadedImages);
+          console.log("Image is deleted from cloudnary");
+        }
+
+        /* insert new images */
+        const cloudnaryUploadedImages = req.files.map((image) => {
+          return limit(async () => {
+            const cloudnaryResult = await uploadOnCloudnary(image.path);
+            return cloudnaryResult;
+          });
+        });
+        const cloudnaryUploads = await Promise.all(cloudnaryUploadedImages);
+        filePaths = cloudnaryUploads.map((item) => item.url);
+
+        req.files?.map((image) => {
+          fs.unlinkSync(image.path);
+        });
+      }
+
+      const updateHotel = {
+        userId,
+        title,
+        type,
+        city,
+        address,
+        distance,
+        description,
+        rating,
+        cheapestPrice,
+        featured,
+        freeTaxi,
+        freeCancel,
+        ...(req.files && { photos: filePaths }),
+      };
+
+      const updatedHotelData = await Hotel.findOneAndUpdate(
+        { _id: user._id },
+        updateHotel,
         { new: true }
       );
       res.status(200).json(updatedHotelData);

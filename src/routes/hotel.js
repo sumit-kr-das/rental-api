@@ -22,7 +22,11 @@ router.get("/room/:id", hotelController.getHotelRooms);
 router.get("/search/:place", hotelController.searchHotel);
 
 /* UPDATE */
-router.put("/:id", verifyHotel, hotelController.updateHotel);
+router.put(
+  "/",
+  [verifyHotel, fileUpload.array("images")],
+  hotelController.updateHotel
+);
 
 /* DELETE */
 router.delete("/:id", verifyHotel, hotelController.deleteHotel);
