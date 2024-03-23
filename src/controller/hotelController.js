@@ -148,6 +148,9 @@ const hotelController = {
       );
       res.status(200).json(updatedHotelData);
     } catch (err) {
+      req.files?.map((image) => {
+        fs.unlinkSync(image.path);
+      });
       next(err);
     }
   },
