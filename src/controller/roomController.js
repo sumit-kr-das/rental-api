@@ -4,10 +4,12 @@ import Booking from "../models/Booking.js";
 
 const roomController = {
   async createRoom(req, res, next) {
-    const findHotel = await Hotel.findOne({ userId: req.user.id });
-    const newRoom = new Room(req.body);
     try {
+      const findHotel = await Hotel.findOne({ userId: req.user.id });
+      console.log(findHotel);
+      const newRoom = new Room(req.body);
       const savedRoom = await newRoom.save();
+
       try {
         await Hotel.findByIdAndUpdate(findHotel._id, {
           $push: { rooms: savedRoom._id },
@@ -103,6 +105,15 @@ const roomController = {
       next(err);
     }
   },
+
+  // async findRoomsByHotel(req, res, next) {
+  //   try {
+  //     const rooms = await Room.find({ hotel: hotelId }).exec();
+  //     res.status(200).json(rooms);
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // },
 };
 
 export default roomController;

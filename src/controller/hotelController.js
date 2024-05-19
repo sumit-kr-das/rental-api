@@ -167,6 +167,7 @@ const hotelController = {
   async getHotel(req, res, next) {
     try {
       const getSingleHotel = await Hotel.findById(req.params.id);
+      console.log("Hotel find by id", getSingleHotel);
       res.status(200).json(getSingleHotel);
     } catch (err) {
       next(err);
