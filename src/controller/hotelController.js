@@ -185,10 +185,8 @@ const hotelController = {
     try {
       const getAllHotels = await Hotel.find({
         ...others,
-        cheapestPrice: { $gt: min | 1, $lt: max || 9999 },
+        cheapestPrice: { $gt: min | 1, $lt: max || 999999 },
       }).limit(limit);
-
-      // const getAllHotels = await Hotel.find()
 
       res.status(200).json(getAllHotels);
     } catch (err) {
