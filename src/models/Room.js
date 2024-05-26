@@ -5,10 +5,10 @@ const reqNumber = { type: Number, required: true };
 
 const RoomSchema = new mongoose.Schema(
   {
-    // hotel: { type: mongoose.Schema.Types.ObjectId, ref: "Hotels" },
     title: reqString,
     price: reqNumber,
     beds: reqNumber,
+    bathroom: reqNumber,
     maxPeople: reqNumber,
     area: { type: Number },
     desc: reqString,

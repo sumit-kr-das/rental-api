@@ -6,7 +6,6 @@ const roomController = {
   async createRoom(req, res, next) {
     try {
       const findHotel = await Hotel.findOne({ userId: req.user.id });
-      console.log(findHotel);
       const newRoom = new Room(req.body);
       const savedRoom = await newRoom.save();
 
@@ -76,7 +75,7 @@ const roomController = {
     const roomID = req.params.roomId;
 
     try {
-      await Room.updateOne(
+      const roomUpdateResponse = await Room.updateOne(
         { "roomNumbers._id": roomID },
         {
           $push: {
@@ -84,7 +83,8 @@ const roomController = {
           },
         }
       );
-      try {
+      let bookedRoom;
+      if (roomUpdateResponse.modifiedCount > 0) {
         const newBooking = new Booking({
           userId: userID,
           roomId: roomID,
@@ -95,12 +95,9 @@ const roomController = {
           options: req.body.options,
           price: req.body.totalPrice,
         });
-        const bookedRoom = await newBooking.save();
-        res.status(200).json(bookedRoom);
-      } catch (err) {
-        next(err);
+        bookedRoom = await newBooking.save();
       }
-      // res.status(200).json("Room has been updated");
+      res.status(200).json(bookedRoom);
     } catch (err) {
       next(err);
     }

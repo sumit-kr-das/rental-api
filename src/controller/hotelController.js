@@ -106,8 +106,6 @@ const hotelController = {
           //   });
           // }
           const newUploadedImages = await Promise.all(removeUploadedImages);
-          console.log("from update", newUploadedImages);
-          console.log("Image is deleted from cloudnary");
         }
 
         /* insert new images */
@@ -167,7 +165,6 @@ const hotelController = {
   async getHotel(req, res, next) {
     try {
       const getSingleHotel = await Hotel.findById(req.params.id);
-      console.log("Hotel find by id", getSingleHotel);
       res.status(200).json(getSingleHotel);
     } catch (err) {
       next(err);
@@ -185,14 +182,11 @@ const hotelController = {
 
   async getHotels(req, res, next) {
     const { min, max, limit, ...others } = req.query;
-    console.log(others);
     try {
       const getAllHotels = await Hotel.find({
         ...others,
-        cheapestPrice: { $gt: min | 1, $lt: max || 9999 },
+        cheapestPrice: { $gt: min | 1, $lt: max || 999999 },
       }).limit(limit);
-
-      // const getAllHotels = await Hotel.find()
 
       res.status(200).json(getAllHotels);
     } catch (err) {
