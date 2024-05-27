@@ -70,6 +70,27 @@ const roomController = {
     }
   },
 
+  async getHotelRooms(req, res, next) {
+    try {
+      const hotel = await Hotel.findOne({ userId: req.user.id });
+      if (!hotel) {
+        return res.status(401).json({
+          msg: "Hotel not found!",
+        });
+      }
+
+      const rooms = await Promise.all(
+        hotel.rooms.map((roomId) => {
+          return Room.findById(roomId);
+        })
+      );
+
+      res.status(200).json(rooms);
+    } catch (err) {
+      next(err);
+    }
+  },
+
   async updateRoomAvailability(req, res, next) {
     const userID = req.user.id;
     const roomID = req.params.roomId;
