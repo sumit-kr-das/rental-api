@@ -20,6 +20,8 @@ const hotelController = {
       featured,
       freeTaxi,
       freeCancel,
+      latitude,
+      longitude,
     } = req.body;
 
     let filePaths;
@@ -52,15 +54,20 @@ const hotelController = {
         featured,
         freeTaxi,
         freeCancel,
+        latitude,
+        longitude,
         photos: filePaths,
       });
       const savedHotel = await createHotel.save();
       res.status(200).json(savedHotel);
     } catch (err) {
-      req.files?.map((image) => {
-        fs.unlinkSync(image.path);
-      });
+      if (req?.files) {
+        req.files?.map((image) => {
+          fs.unlinkSync(image.path);
+        });
+      }
       next(err);
+      console.log(err.message);
     }
   },
 

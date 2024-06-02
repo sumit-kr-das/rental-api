@@ -12,6 +12,7 @@ const router = express.Router();
 router.post("/", verifyHotel, roomController.createRoom);
 
 /* READ */
+router.get("/getHotelRooms", verifyHotel, roomController.getHotelRooms);
 router.get("/", roomController.getRooms);
 router.get("/:id", roomController.getRoom);
 
